@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LITRevu{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        cream: '#f0ede8',
+                    }
+                }
+            }
+        }
+    </script>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-cream text-gray-900 min-h-screen flex flex-col" style="background-color: #f0ede8;">
+
+<div class="max-w-5xl mx-auto w-full flex-1 flex flex-col border-x border-gray-300 min-h-screen">
+
+<header class="border-b border-gray-300">
+    <div class="px-6 py-4 flex justify-center">
+        <a href="/"><img src="{% static 'banner.png' %}" alt="LITRevu" class="h-10"></a>
+    </div>
+    <div class="px-6 py-2 border-t border-gray-200 flex items-center justify-between">
+        <span class="text-xs tracking-widest text-gray-400 uppercase">
+            {% block header_left %}{% endblock %}
+        </span>
+        {% if user.is_authenticated %}
+        <div class="flex items-center gap-4">
+            <span class="text-xs text-gray-400">{{ user.username }}</span>
+            <form method="post" action="{% url 'logout' %}" class="inline-flex items-center">
+                {% csrf_token %}
+                <button type="submit" class="text-xs text-gray-500 hover:text-gray-900 transition cursor-pointer bg-transparent border-none p-0 leading-none">
+                    Déconnexion
+                </button>
+            </form>
+        </div>
+        {% else %}
+        <span></span>
+        {% endif %}
+    </div>
+</header>
+
+<main class="flex-1 w-full">
+    {% if messages %}
+    <div class="max-w-4xl mx-auto px-6 pt-4">
+        <ul class="space-y-2 list-none">
+            {% for message in messages %}
+            <li class="px-4 py-3 text-xs font-mono tracking-wide border
+                {% if message.tags == 'error' %}border-red-300 text-red-700 bg-red-50
+                {% elif message.tags == 'success' %}border-green-300 text-green-700 bg-green-50
+                {% else %}border-gray-300 text-gray-600{% endif %}">
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</main>
+
+</div>
+
+</body>
+</html>
