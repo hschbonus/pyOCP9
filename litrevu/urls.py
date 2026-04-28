@@ -19,10 +19,14 @@ from django.contrib import admin
 from django.urls import path
 
 import authentication.views
+import blog.views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', authentication.views.LoginPageView.as_view(), name='login'),
     path('signup/', authentication.views.SignupPageView.as_view(), name='signup'),
     path('logout/', authentication.views.LogoutPageView.as_view(), name='logout'),
+    # path('feed/', authentication.views.FeedPageView.as_view(), name='feed'),
+    path('ticket/create/', blog.views.CreateTicketView.as_view(), name='create_ticket'),
+    # path('ticket/update/<int:ticket_id>/', blog.views.UpdateTicketView.as_view(), name='update_ticket'),
 ]

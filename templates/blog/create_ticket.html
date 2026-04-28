@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Créer un billet — LITRevu{% endblock %}
+
+{% block content %}
+<div class="flex justify-center px-4 py-12">
+    <div class="w-full max-w-xl bg-white border border-gray-900 shadow-lg rounded-sm self-start">
+
+        <div class="border-b border-gray-200 px-8 py-5">
+            <p class="text-xs tracking-widest text-gray-400 uppercase mb-1">Nouveau billet</p>
+            <h2 class="text-xl font-semibold text-gray-900">Créer un billet</h2>
+        </div>
+
+        <div class="px-8 py-8">
+
+            {% if form.errors %}
+            <div class="text-xs text-red-600 border border-red-200 bg-red-50 px-3 py-2 mb-6 rounded-sm">
+                Veuillez corriger les erreurs ci-dessous.
+            </div>
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <div class="mb-5">
+                    <label for="{{ field.id_for_label }}" class="block text-xs tracking-widest text-gray-400 uppercase mb-2">
+                        {{ field.label }}
+                    </label>
+                    {% if field.field.widget.input_type == 'textarea' %}
+                    <textarea name="{{ field.html_name }}"
+                              id="{{ field.id_for_label }}"
+                              rows="4"
+                              class="w-full bg-transparent border border-gray-200 px-3 py-2 text-sm text-gray-900
+                                     focus:outline-none focus:border-gray-900 transition-colors rounded-sm resize-none">{{ field.value|default:'' }}</textarea>
+                    {% else %}
+                    <input type="{{ field.field.widget.input_type }}"
+                           name="{{ field.html_name }}"
+                           id="{{ field.id_for_label }}"
+                           {% if field.value %}value="{{ field.value }}"{% endif %}
+                           class="w-full bg-transparent border border-gray-200 px-3 py-2 text-sm text-gray-900
+                                  focus:outline-none focus:border-gray-900 transition-colors rounded-sm">
+                    {% endif %}
+                    {% if field.errors %}
+                    <p class="text-xs text-red-600 mt-1">{{ field.errors|join:", " }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <div class="flex justify-end mt-6">
+                    <button type="submit"
+                        class="border border-gray-900 text-gray-900 text-sm px-5 py-2 hover:bg-gray-900 hover:text-white transition-colors">
+                        Publier
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
