@@ -13,8 +13,8 @@
         }
     </script>
 </head>
-<body class="min-h-screen flex justify-center px-4 pt-32" style="background-color: #f0ede8; font-family: 'Inter', sans-serif;">
-
+<body class="min-h-screen" style="background-color: #f0ede8; font-family: 'Inter', sans-serif;">
+<main class="min-h-screen flex justify-center px-4 pt-32">
     <div class="w-full max-w-2xl bg-white shadow-lg rounded-sm overflow-hidden border border-gray-900 self-start">
 
         <!-- Header de la card -->
@@ -24,11 +24,11 @@
 
         <!-- Formulaire -->
         <div class="px-10 py-12">
-            <p class="text-xs tracking-widest text-gray-400 uppercase mb-5">Nouveau ici ?</p>
+            <p class="text-xs tracking-widest text-gray-600 uppercase mb-5">Nouveau ici ?</p>
             <h2 class="text-xl font-semibold text-gray-900 mb-8">Inscrivez-vous</h2>
 
             {% if form.errors %}
-            <p class="text-xs text-red-600 border border-red-200 bg-red-50 px-3 py-2 mb-6 rounded-sm">
+            <p class="text-xs text-red-600 border border-red-200 bg-red-50 px-3 py-2 mb-6 rounded-sm" role="alert">
                 Veuillez corriger les erreurs ci-dessous.
             </p>
             {% endif %}
@@ -38,7 +38,7 @@
 
                 {% for field in form %}
                 <div class="mb-4">
-                    <label for="{{ field.id_for_label }}" class="block text-xs tracking-widest text-gray-400 uppercase mb-2">
+                    <label for="{{ field.id_for_label }}" class="block text-xs tracking-widest text-gray-600 uppercase mb-2">
                         {{ field.label }}
                     </label>
                     <input type="{{ field.field.widget.input_type }}"
@@ -54,7 +54,7 @@
                 {% endfor %}
 
                 <div class="flex items-center justify-between mt-8">
-                    <a href="{% url 'login' %}" class="text-xs text-gray-400 hover:text-gray-900 transition-colors">
+                    <a href="{% url 'login' %}" class="text-xs text-gray-600 hover:text-gray-900 transition-colors">
                         Déjà un compte ?
                     </a>
                     <button type="submit"
@@ -67,5 +67,6 @@
 
     </div>
 
+</main>
 </body>
 </html>

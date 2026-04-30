@@ -13,8 +13,8 @@
         }
     </script>
 </head>
-<body class="min-h-screen flex justify-center px-4 pt-32" style="background-color: #f0ede8; font-family: 'Inter', sans-serif;">
-
+<body class="min-h-screen" style="background-color: #f0ede8; font-family: 'Inter', sans-serif;">
+<main class="min-h-screen flex justify-center px-4 pt-32">
     <div class="w-full max-w-2xl bg-white shadow-lg rounded-sm overflow-hidden border border-gray-900 self-start">
 
         <!-- Header de la card -->
@@ -27,7 +27,7 @@
 
             <!-- Colonne gauche — Inscription -->
             <div class="w-1/2 border-r border-gray-200 px-10 py-12 flex flex-col items-start">
-                <p class="text-xs tracking-widest text-gray-400 uppercase mb-5">Nouveau ici ?</p>
+                <p class="text-xs tracking-widest text-gray-600 uppercase mb-5">Nouveau ici ?</p>
                 <h2 class="text-xl font-semibold text-gray-900 mb-8">Inscrivez-vous</h2>
                 <a href="{% url 'signup' %}"
                    class="border border-gray-900 text-gray-900 text-sm px-5 py-2 hover:bg-gray-900 hover:text-white transition-colors">
@@ -37,11 +37,11 @@
 
             <!-- Colonne droite — Connexion -->
             <div class="w-1/2 px-10 py-12 flex flex-col">
-                <p class="text-xs tracking-widest text-gray-400 uppercase mb-5">Déjà membre ?</p>
+                <p class="text-xs tracking-widest text-gray-600 uppercase mb-5">Déjà membre ?</p>
                 <h2 class="text-xl font-semibold text-gray-900 mb-8">Connectez-vous</h2>
 
                 {% if form.errors %}
-                <p class="text-xs text-red-600 border border-red-200 bg-red-50 px-3 py-2 mb-6 rounded-sm">
+                <p class="text-xs text-red-600 border border-red-200 bg-red-50 px-3 py-2 mb-6 rounded-sm" role="alert">
                     Nom d'utilisateur ou mot de passe incorrect.
                 </p>
                 {% endif %}
@@ -50,7 +50,7 @@
                     {% csrf_token %}
 
                     <div class="mb-4">
-                        <label for="id_username" class="block text-xs tracking-widest text-gray-400 uppercase mb-2">
+                        <label for="id_username" class="block text-xs tracking-widest text-gray-600 uppercase mb-2">
                             {{ form.username.label }}
                         </label>
                         <input type="text" name="username" id="id_username" maxlength="63" required
@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="mb-8">
-                        <label for="id_password" class="block text-xs tracking-widest text-gray-400 uppercase mb-2">
+                        <label for="id_password" class="block text-xs tracking-widest text-gray-600 uppercase mb-2">
                             {{ form.password.label }}
                         </label>
                         <input type="password" name="password" id="id_password" maxlength="63" required
@@ -79,5 +79,6 @@
         </div>
     </div>
 
+</main>
 </body>
 </html>

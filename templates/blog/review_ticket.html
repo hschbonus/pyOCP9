@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Créer une critique — LITRevu{% endblock %}
+
+{% block content %}
+<div class="flex justify-center px-4 py-12">
+    <div class="w-full max-w-xl self-start space-y-6">
+
+        <!-- Ticket à critiquer -->
+        <div class="bg-white border border-gray-900 shadow-lg rounded-sm">
+            <div class="border-b border-gray-200 px-8 py-5">
+                <p class="text-xs tracking-widest text-gray-600 uppercase mb-1">Ticket</p>
+                <h2 class="text-xl font-semibold text-gray-900">{{ ticket.title }}</h2>
+            </div>
+            <div class="px-8 py-6 space-y-4">
+                {% if ticket.image %}
+                <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}" class="w-full max-h-64 object-cover rounded-sm border border-gray-200">
+                {% endif %}
+                {% if ticket.description %}
+                <p class="text-sm text-gray-600 leading-relaxed">{{ ticket.description }}</p>
+                {% endif %}
+                <p class="text-xs text-gray-600">Par {{ ticket.user.username }}</p>
+            </div>
+        </div>
+
+        <!-- Formulaire de critique -->
+        <div class="bg-white border border-gray-900 shadow-lg rounded-sm">
+            <div class="border-b border-gray-200 px-8 py-5">
+                <p class="text-xs tracking-widest text-gray-600 uppercase mb-1">Critique</p>
+                <h2 class="text-xl font-semibold text-gray-900">Rédiger une critique</h2>
+            </div>
+
+            <div class="px-8 py-8">
+
+                {% if form.errors %}
+                <div class="text-xs text-red-600 border border-red-200 bg-red-50 px-3 py-2 mb-6 rounded-sm" role="alert">
+                    Veuillez corriger les erreurs ci-dessous.
+                </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                    <div class="mb-5">
+                        <label for="{{ field.id_for_label }}" class="block text-xs tracking-widest text-gray-600 uppercase mb-2">
+                            {{ field.label }}
+                        </label>
+                        {% if field.field.widget.input_type == 'textarea' %}
+                        <textarea name="{{ field.html_name }}"
+                                  id="{{ field.id_for_label }}"
+                                  rows="4"
+                                  class="w-full bg-transparent border border-gray-200 px-3 py-2 text-sm text-gray-900
+                                         focus:outline-none focus:border-gray-900 transition-colors rounded-sm resize-none">{{ field.value|default:'' }}</textarea>
+                        {% elif field.field.widget.input_type == 'radio' %}
+                        <div class="flex gap-2">
+                            {% for radio in field %}
+                            <label for="{{ radio.id_for_label }}"
+                                   class="cursor-pointer flex items-center justify-center w-9 h-9 border border-gray-200 text-sm text-gray-700 hover:border-gray-900 transition-colors has-[:checked]:bg-gray-900 has-[:checked]:text-white has-[:checked]:border-gray-900 rounded-sm">
+                                <span class="sr-only">{{ radio.tag }}</span>{{ radio.choice_label }}
+                            </label>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <input type="{{ field.field.widget.input_type }}"
+                               name="{{ field.html_name }}"
+                               id="{{ field.id_for_label }}"
+                               {% if field.value %}value="{{ field.value }}"{% endif %}
+                               class="w-full bg-transparent border border-gray-200 px-3 py-2 text-sm text-gray-900
+                                      focus:outline-none focus:border-gray-900 transition-colors rounded-sm">
+                        {% endif %}
+                        {% if field.errors %}
+                        <p class="text-xs text-red-600 mt-1">{{ field.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+
+                    <div class="flex justify-end mt-6">
+                        <button type="submit"
+                            class="border border-gray-900 text-gray-900 text-sm px-5 py-2 hover:bg-gray-900 hover:text-white transition-colors">
+                            Publier la critique
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

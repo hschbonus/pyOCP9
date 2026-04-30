@@ -32,7 +32,7 @@
     <div class="flex items-center gap-4">
         <a href="/"><img src="{% static 'logo.png' %}" alt="LITRevu" class="h-24"></a>
         {% if user.is_authenticated %}
-        <span class="text-sm text-gray-400">Bonjour, {{ user.username }}</span>
+        <span class="text-sm text-gray-600">Bonjour, {{ user.username }}</span>
         {% endif %}
     </div>
     {% if user.is_authenticated %}
