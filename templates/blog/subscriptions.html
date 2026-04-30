@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Abonnements — LITRevu{% endblock %}
+
+{% block content %}
+<div class="flex justify-center px-4 py-12">
+    <div class="w-full max-w-xl self-start space-y-6">
+
+        <!-- Formulaire : suivre un utilisateur -->
+        <div class="bg-white border border-gray-900 shadow-lg rounded-sm">
+            <div class="border-b border-gray-200 px-8 py-5">
+                <p class="text-xs tracking-widest text-gray-600 uppercase mb-1">Abonnements</p>
+                <h2 class="text-xl font-semibold text-gray-900">Suivre un utilisateur</h2>
+            </div>
+            <div class="px-8 py-8">
+
+                {% if message %}
+                <div class="text-xs text-red-600 border border-red-200 bg-red-50 px-3 py-2 mb-6 rounded-sm" role="alert">
+                    {{ message }}
+                </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-5">
+                        <label for="{{ user_follow_form.username.id_for_label }}"
+                               class="block text-xs tracking-widest text-gray-600 uppercase mb-2">
+                            {{ user_follow_form.username.label }}
+                        </label>
+                        <input type="text"
+                               name="{{ user_follow_form.username.html_name }}"
+                               id="{{ user_follow_form.username.id_for_label }}"
+                               maxlength="63"
+                               class="w-full bg-transparent border border-gray-200 px-3 py-2 text-sm text-gray-900
+                                      focus:outline-none focus:border-gray-900 transition-colors rounded-sm">
+                        {% if user_follow_form.username.errors %}
+                        <p class="text-xs text-red-600 mt-1">{{ user_follow_form.username.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="submit"
+                            class="border border-gray-900 text-gray-900 text-sm px-5 py-2 hover:bg-gray-900 hover:text-white transition-colors">
+                            Suivre
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Liste : utilisateurs suivis -->
+        <div class="bg-white border border-gray-900 shadow-lg rounded-sm">
+            <div class="border-b border-gray-200 px-8 py-5">
+                <p class="text-xs tracking-widest text-gray-600 uppercase mb-1">Suivis</p>
+                <h2 class="text-xl font-semibold text-gray-900">Utilisateurs suivis</h2>
+            </div>
+            <div class="px-8 py-6">
+                {% if followed_users %}
+                <ul class="space-y-3">
+                    {% for follow in followed_users %}
+                    <li class="flex items-center justify-between">
+                        <span class="text-sm text-gray-900">{{ follow.followed_user.username }}</span>
+                        <form method="post" action="{% url 'delete_follow' follow.followed_user.id %}">
+                            {% csrf_token %}
+                            <button type="submit"
+                                class="text-xs border border-gray-300 text-gray-500 px-3 py-1 hover:border-gray-900 hover:text-gray-900 transition-colors">
+                                Se désabonner
+                            </button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-sm text-gray-600">Vous ne suivez personne pour l'instant.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Liste : abonnés -->
+        <div class="bg-white border border-gray-900 shadow-lg rounded-sm">
+            <div class="border-b border-gray-200 px-8 py-5">
+                <p class="text-xs tracking-widest text-gray-600 uppercase mb-1">Abonnés</p>
+                <h2 class="text-xl font-semibold text-gray-900">Utilisateurs qui vous suivent</h2>
+            </div>
+            <div class="px-8 py-6">
+                {% if followers %}
+                <ul class="space-y-3">
+                    {% for follow in followers %}
+                    <li class="text-sm text-gray-900">{{ follow.user.username }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-sm text-gray-600">Personne ne vous suit pour l'instant.</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

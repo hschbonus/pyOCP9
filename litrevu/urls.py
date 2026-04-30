@@ -26,7 +26,6 @@ urlpatterns = [
     path('', authentication.views.LoginPageView.as_view(), name='login'),
     path('signup/', authentication.views.SignupPageView.as_view(), name='signup'),
     path('logout/', authentication.views.LogoutPageView.as_view(), name='logout'),
-    # path('feed/', authentication.views.FeedPageView.as_view(), name='feed'),
     path('ticket/create/', blog.views.CreateTicketView.as_view(), name='create_ticket'),
     path('ticket/update/<int:ticket_id>/', blog.views.UpdateTicketView.as_view(), name='update_ticket'),
     path('ticket/delete/<int:ticket_id>/', blog.views.DeleteTicketView.as_view(), name='delete_ticket'),
@@ -34,4 +33,8 @@ urlpatterns = [
     path('ticket-and-review/create/', blog.views.CreateTicketAndReviewView.as_view(), name='create_ticket_and_review'),
     path('review/update/<int:review_id>/', blog.views.UpdateReviewView.as_view(), name='update_review'),
     path('review/delete/<int:review_id>/', blog.views.DeleteReviewView.as_view(), name='delete_review'),
+    path('posts/', blog.views.PostsPageView.as_view(), name='posts'),
+    path('subscriptions/', blog.views.SubscriptionsView.as_view(), name='subscriptions'),
+    path('subscriptions/delete/<int:followed_user_id>/', blog.views.DeleteFollowView.as_view(), name='delete_follow'),
+    path('feed/', blog.views.FeedPageView.as_view(), name='feed'),
 ]

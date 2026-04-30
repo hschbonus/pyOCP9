@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Vos posts — LITRevu{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto px-4 py-12">
+
+    <h2 class="text-xl font-semibold text-gray-900 mb-8">Vos posts</h2>
+
+    {% if posts %}
+    <div class="space-y-6">
+        {% for post in posts %}
+            {% if post.content_type == 'TICKET' %}
+                {% include 'blog/ticket_snippet.html' %}
+            {% elif post.content_type == 'REVIEW' %}
+                {% include 'blog/review_snippet.html' %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-sm text-gray-600">Vous n'avez publié aucun contenu pour l'instant.</p>
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Flux — LITRevu{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto px-4 py-12">
+
+    <div class="flex gap-3 mb-8">
+        <a href="{% url 'create_ticket' %}"
+           class="border border-gray-900 text-gray-900 text-sm px-5 py-2 hover:bg-gray-900 hover:text-white transition-colors">
+            Demander une critique
+        </a>
+        <a href="{% url 'create_ticket_and_review' %}"
+           class="border border-gray-900 text-gray-900 text-sm px-5 py-2 hover:bg-gray-900 hover:text-white transition-colors">
+            Créer une critique
+        </a>
+    </div>
+
+    {% if tickets_and_reviews %}
+    <div class="space-y-6">
+        {% for post in tickets_and_reviews %}
+            {% if post.content_type == 'TICKET' %}
+                {% include 'blog/ticket_snippet.html' %}
+            {% elif post.content_type == 'REVIEW' %}
+                {% include 'blog/review_snippet.html' %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-sm text-gray-600">Aucun contenu à afficher pour l'instant.</p>
+    {% endif %}
+
+</div>
+{% endblock %}
