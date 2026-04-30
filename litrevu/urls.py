@@ -17,6 +17,8 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 import authentication.views
 import blog.views
@@ -37,4 +39,4 @@ urlpatterns = [
     path('subscriptions/', blog.views.SubscriptionsView.as_view(), name='subscriptions'),
     path('subscriptions/delete/<int:followed_user_id>/', blog.views.DeleteFollowView.as_view(), name='delete_follow'),
     path('feed/', blog.views.FeedPageView.as_view(), name='feed'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

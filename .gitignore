@@ -2,3 +2,4 @@
 .venv
 mission
 *.md
+!README.md

@@ -69,11 +69,18 @@ class CreateReviewView(LoginRequiredMixin, View):
     form_class = forms.ReviewForm
 
     def get(self, request, ticket_id):
+        reviewed_ticket_ids = Review.objects.filter(user=request.user).values_list('ticket_id', flat=True)
+        if ticket_id in reviewed_ticket_ids:
+            return redirect('feed')
         ticket = get_object_or_404(Ticket, id=ticket_id)
         form = self.form_class()
         return render(request, self.template_name, context={'form': form, 'ticket': ticket})
 
     def post(self, request, ticket_id):
+        reviewed_ticket_ids = Review.objects.filter(user=request.user).values_list('ticket_id', flat=True)
+        if ticket_id in reviewed_ticket_ids:
+            return redirect('feed')
+
         ticket = get_object_or_404(Ticket, id=ticket_id)
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -230,6 +237,7 @@ class FeedPageView(LoginRequiredMixin, View):
 
     def get(self, request):
         followed_users = UserFollows.objects.filter(user=request.user).values_list('followed_user', flat=True)
+        reviewed_tickets_ids = Review.objects.filter(user=request.user).values_list('ticket_id', flat=True)
 
         tickets = Ticket.objects.filter(
             Q(user__in=followed_users) |
@@ -248,5 +256,6 @@ class FeedPageView(LoginRequiredMixin, View):
 
         context = {
             'tickets_and_reviews': tickets_and_reviews,
+            'reviewed_tickets_ids': reviewed_tickets_ids,
         }
         return render(request, self.template_name, context=context)

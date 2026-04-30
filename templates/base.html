@@ -26,6 +26,10 @@
 </head>
 <body class="bg-cream text-gray-900 min-h-screen flex flex-col" style="background-color: #f0ede8;">
 
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:text-gray-900 focus:border focus:border-gray-900">
+    Aller au contenu principal
+</a>
+
 <div class="max-w-5xl mx-auto w-full flex-1 flex flex-col border-x border-gray-300 min-h-screen">
 
 <header class="border-b border-gray-300 px-6 py-3 flex items-center justify-between">
@@ -50,7 +54,7 @@
     {% endif %}
 </header>
 
-<main class="flex-1 w-full">
+<main id="main-content" class="flex-1 w-full">
     {% if messages %}
     <div class="max-w-4xl mx-auto px-6 pt-4">
         <ul class="space-y-2 list-none">
