@@ -30,29 +30,31 @@
     Aller au contenu principal
 </a>
 
-<div class="max-w-5xl mx-auto w-full flex-1 flex flex-col border-x border-gray-300 min-h-screen">
-
-<header class="border-b border-gray-300 px-6 py-3 flex items-center justify-between">
-    <div class="flex items-center gap-4">
-        <a href="/"><img src="{% static 'logo.png' %}" alt="LITRevu" class="h-24"></a>
+<header class="border-b border-gray-300 px-6 py-3">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <a href="/"><img src="{% static 'logo.png' %}" alt="LITRevu" class="h-24"></a>
+            {% if user.is_authenticated %}
+            <span class="text-sm text-gray-600">Bonjour, {{ user.username }}</span>
+            {% endif %}
+        </div>
         {% if user.is_authenticated %}
-        <span class="text-sm text-gray-600">Bonjour, {{ user.username }}</span>
+        <nav class="flex items-center gap-6">
+            <a href="{% url 'feed' %}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Flux</a>
+            <a href="{% url 'posts' %}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Posts</a>
+            <a href="{% url 'subscriptions' %}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Abonnements</a>
+            <form method="post" action="{% url 'logout' %}" class="inline-flex items-center">
+                {% csrf_token %}
+                <button type="submit" class="text-sm text-gray-500 hover:text-gray-900 transition cursor-pointer bg-transparent border-none p-0 leading-none">
+                    Se déconnecter
+                </button>
+            </form>
+        </nav>
         {% endif %}
     </div>
-    {% if user.is_authenticated %}
-    <nav class="flex items-center gap-6">
-        <a href="{% url 'feed' %}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Flux</a>
-        <a href="{% url 'posts' %}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Posts</a>
-        <a href="{% url 'subscriptions' %}" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">Abonnements</a>
-        <form method="post" action="{% url 'logout' %}" class="inline-flex items-center">
-            {% csrf_token %}
-            <button type="submit" class="text-sm text-gray-500 hover:text-gray-900 transition cursor-pointer bg-transparent border-none p-0 leading-none">
-                Se déconnecter
-            </button>
-        </form>
-    </nav>
-    {% endif %}
 </header>
+
+<div class="max-w-5xl mx-auto w-full flex-1 flex flex-col">
 
 <main id="main-content" class="flex-1 w-full">
     {% if messages %}

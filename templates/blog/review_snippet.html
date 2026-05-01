@@ -4,21 +4,34 @@
         <div>
             <p class="text-xs tracking-widest text-gray-600 uppercase mb-1">Critique</p>
             <h3 class="text-lg font-semibold text-gray-900">{{ post.ticket.title }}</h3>
+            {% if post.ticket.user != request.user %}
             <p class="text-xs text-gray-600 mt-1">Billet de {{ post.ticket.user.username }}</p>
+            {% else %}
+            <p class="text-xs text-gray-600 mt-1">Mon billet</p>
+            {% endif %}
         </div>
         <span class="text-xs text-gray-600 shrink-0 ml-4">{{ post.time_created|date:"d/m/Y" }}</span>
     </div>
 
     <div class="px-6 py-5 space-y-3">
-        <div class="flex items-center gap-2">
-            <span class="text-2xl font-semibold text-gray-900">{{ post.rating }}</span>
-            <span class="text-sm text-gray-600">/5</span>
+        <div class="flex items-center gap-1">
+            {% for i in "12345" %}
+                {% if forloop.counter <= post.rating %}
+                <span class="text-yellow-400 text-lg">★</span>
+                {% else %}
+                <span class="text-gray-300 text-lg">★</span>
+                {% endif %}
+            {% endfor %}
         </div>
         <h4 class="text-sm font-semibold text-gray-900">{{ post.headline }}</h4>
         {% if post.body %}
         <p class="text-sm text-gray-700 leading-relaxed">{{ post.body }}</p>
         {% endif %}
+        {% if post.user != request.user %}
         <p class="text-xs text-gray-600">Par {{ post.user.username }}</p>
+        {% else %}
+        <p class="text-xs text-gray-600">Par moi</p>
+        {% endif %}
     </div>
 
     {% if post.user == request.user %}

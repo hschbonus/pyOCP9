@@ -41,9 +41,9 @@
                 <p class="text-xs tracking-widest text-gray-600 uppercase mb-5">Déjà membre ?</p>
                 <h2 class="text-xl font-semibold text-gray-900 mb-8">Connectez-vous</h2>
 
-                {% if form.errors %}
+                {% if message %}
                 <p class="text-xs text-red-600 border border-red-200 bg-red-50 px-3 py-2 mb-6 rounded-sm" role="alert">
-                    Nom d'utilisateur ou mot de passe incorrect.
+                    {{ message }}
                 </p>
                 {% endif %}
 

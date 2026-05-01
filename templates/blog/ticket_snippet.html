@@ -16,7 +16,11 @@
         {% if post.description %}
         <p class="text-sm text-gray-700 leading-relaxed">{{ post.description }}</p>
         {% endif %}
-        <p class="text-xs text-gray-600">Par {{ post.user.username }}</p>
+        {% if post.user != request.user %}
+            <p class="text-xs text-gray-600">Par {{ post.user.username }}</p>
+        {% else %}
+            <p class="text-xs text-gray-600">Par moi</p>
+        {% endif %}
     </div>
 
     <div class="border-t border-gray-100 px-6 py-3 flex justify-end gap-3">
