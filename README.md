@@ -19,7 +19,7 @@ Projet 9 — Formation Python RNCP, OpenClassrooms.
 
 ```bash
 # Cloner le dépôt
-git clone <url-du-repo>
+git clone https://github.com/hschbonus/pyOCP9.git
 cd pyOCP9
 
 # Créer et activer l'environnement virtuel
@@ -30,7 +30,7 @@ python -m venv .venv
 source .venv/bin/activate
 
 # Installer les dépendances
-pip install django pillow
+pip install -r requirements.txt
 
 # Appliquer les migrations
 python manage.py migrate
@@ -48,6 +48,5 @@ La base de données `db.sqlite3` est incluse avec des comptes et contenus de dé
 ## Vérification PEP8
 
 ```bash
-pip install flake8
-flake8 . --exclude=.venv,migrations --max-line-length=119
+flake8 .
 ```
