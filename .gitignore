@@ -3,3 +3,4 @@
 mission
 *.md
 !README.md
+dashboard.yaml
