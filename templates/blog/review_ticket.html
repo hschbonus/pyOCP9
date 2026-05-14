@@ -16,7 +16,7 @@
             </div>
             <div class="px-8 py-6 space-y-4">
                 {% if ticket.image %}
-                <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}" class="w-full max-h-64 object-cover rounded-sm border border-gray-200">
+                <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}" class="w-full object-contain rounded-sm border border-gray-200">
                 {% endif %}
                 {% if ticket.description %}
                 <p class="text-sm text-gray-600 leading-relaxed">{{ ticket.description }}</p>
