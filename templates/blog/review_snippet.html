@@ -14,6 +14,10 @@
     </div>
 
     <div class="px-6 py-5 space-y-3">
+        {% if post.ticket.image %}
+        <img src="{{ post.ticket.image.url }}" alt="{{ post.ticket.title }}"
+             class="w-36 object-contain rounded-sm border border-gray-200">
+        {% endif %}
         <div class="flex items-center gap-1">
             {% for i in "12345" %}
                 {% if forloop.counter <= post.rating %}

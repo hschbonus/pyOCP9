@@ -11,7 +11,7 @@
     <div class="px-6 py-5 space-y-3">
         {% if post.image %}
         <img src="{{ post.image.url }}" alt="{{ post.title }}"
-             class="w-full object-contain rounded-sm border border-gray-200">
+             class="w-48 object-contain rounded-sm border border-gray-200">
         {% endif %}
         {% if post.description %}
         <p class="text-sm text-gray-700 leading-relaxed">{{ post.description }}</p>
